@@ -1,4 +1,4 @@
-import sys,os
+import sys, os
 source = ['./test/','./main/mt22/parser/','./main/mt22/utils/','./main/mt22/astgen/','./main/mt22/checker/','./main/mt22/codegen/']
 for i in source:
     sys.path.append(i)
@@ -14,7 +14,7 @@ def main(argv):
     if len(argv) < 1:
         printUsage()
     elif argv[0] == 'gen':
-        subprocess.run(["java","-jar",ANTLR_JAR,"-o","../target","-no-listener","-visitor","main/mt22/parser/MT22.g4"])
+        subprocess.run(["java","-jar",ANTLR_JAR,"-o", GENERATE_DIR,"-no-listener","-visitor","main/mt22/parser/MT22.g4"])
     elif argv[0] == 'clean':
         subprocess.run(["rm","-rf",TARGET_DIR + "/*"])
                

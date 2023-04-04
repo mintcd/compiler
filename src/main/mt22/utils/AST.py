@@ -7,47 +7,33 @@ class AST(ABC):
         return self.__dict__ == other.__dict__
 
     def accept(self, v, param):
+
         method_name = 'visit{}'.format(self.__class__.__name__)
         visit = getattr(v, method_name)
         return visit(self, param)
 
-
-class Stmt(AST):
-    pass
-
-
-class Expr(Stmt):
-    pass
-
-
-class Type(AST):
-    pass
-
-
-class Decl(AST):
-    pass
+class Stmt(AST): pass
+class Expr(Stmt): pass
+class Type(AST): pass
+class Decl(AST): pass
 
 # Types
-
-
-class AtomicType(Type):
-    pass
-
+class AtomicType(Type): pass
 
 class IntegerType(AtomicType):
     def __str__(self):
         return self.__class__.__name__
-
-
+    
 class FloatType(AtomicType):
+
     def __str__(self):
         return self.__class__.__name__
-
-
+    
 class BooleanType(AtomicType):
+
     def __str__(self):
         return self.__class__.__name__
-
+    
 
 class StringType(AtomicType):
     def __str__(self):
@@ -75,8 +61,7 @@ class VoidType(Type):
 
 # Expressions
 
-class LHS(Expr):
-    pass
+class LHS(Expr): pass
 
 
 class BinExpr(Expr):
@@ -113,7 +98,6 @@ class ArrayCell(LHS):
 
     def __str__(self):
         return "ArrayCell({}, [{}])".format(self.name, ", ".join([str(expr) for expr in self.cell]))
-
 
 class IntegerLit(Expr):
     def __init__(self, val: int):
@@ -247,8 +231,6 @@ class CallStmt(Stmt):
 
 
 # Declarations
-
-
 class VarDecl(Decl):
     def __init__(self, name: str, typ: Type, init: Expr or None = None):
         self.name = name
@@ -282,8 +264,6 @@ class FuncDecl(Decl):
         return "FuncDecl({}, {}, [{}], {}, {})".format(self.name, str(self.return_type), ", ".join([str(param) for param in self.params]), self.inherit if self.inherit else "None", str(self.body))
 
 # Program
-
-
 class Program(AST):
     def __init__(self, decls: List[Decl]):
         self.decls = decls
